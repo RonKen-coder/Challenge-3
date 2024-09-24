@@ -4,21 +4,64 @@ const addEmployeesBtn = document.querySelector('#add-employees-btn');
 // Collect employee data
 const collectEmployees = function() {
   // TODO: Get user input to create and return an array of employee objects
+  let employees = []; // Employees array to contain all of our employee objects
+  let addEmployees = true; // Control variable for the while loop
+
+  // const [firstName, lastName] = nameInput.split(' ');
+
+  while (addEmployees) {
+    // Lines 16-18 Captures the user input for the employee's first name, last name, and salary
+    var firstName = window.prompt("Enter the employee's first name:");
+    var lastName = window.prompt("Enter the employee's last name:");
+    var salaryInput = window.prompt("Enter the employee's salary:");
+
+    var salary = isNaN(parseFloat(salaryInput)) ? 0 : parseFloat(salaryInput);
+    const employee = {
+      firstName: firstName || "",
+      lastName: lastName || "",
+      salary: salary,
+    };
+  
+    employees.push(employee); // Add the employee object to the employees array
+    addEmployees = window.confirm("Do you want to add another employee?"); // Cancel = False || OK = True
+  }
+  return employees;
 }
 
 // Display the average salary
 const displayAverageSalary = function(employeesArray) {
-  // TODO: Calculate and display the average salary
-}
+  if (employeesArray.length === 0) {
+    console.log("No employees to calculate the average salary.");
+    return;
+  }
+
+  const totalSalary = employeesArray.reduce((sum, employee) => sum + employee.salary, 0);
+  const averageSalary = totalSalary / employeesArray.length;
+  const numberOfEmployees = employeesArray.length; // Define numberOfEmployees
+  const averageSalaryWithTwoDecimals = averageSalary.toFixed(2); // Format average salary to two decimals
+
+  console.log(`The average employee salary between our ${numberOfEmployees} employee(s) is $${averageSalaryWithTwoDecimals}`);
+};
 
 // Select a random employee
-const getRandomEmployee = function(employeesArray) {
-  // TODO: Select and display a random employee
-}
+const getRandomEmployee = function (employeesArray) {
+  if (employeesArray.length === 0) {
+    console.log("No employees available for random selection.");
+    return;
+  }
+  const randomIndex = Math.floor(Math.random() * employeesArray.length);
+  const randomEmployee = employeesArray[randomIndex];
+
+  console.log("Random Employee: ", randomEmployee);
+  const randomEmployeeElement = document.querySelector('#random-employee');
+  if (randomEmployeeElement) {
+    randomEmployeeElement.textContent = `Random Employee: ${randomEmployee.firstName} ${randomEmployee.lastName}, Salary: $${randomEmployee.salary}`;
+  }
+  console.log(`Congratulations to ${randomEmployee.firstName} ${randomEmployee.lastName}, our random drawing winner!`);
+};
 
 /*
-  ====================
-  STARTER CODE
+ STARTER CODE
   Do not modify any of the code below this line:
 */
 
